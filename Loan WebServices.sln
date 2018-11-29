@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2048
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loan WebServices", "Loan WebServices\Loan WebServices.csproj", "{9EC0E480-E48C-4691-B733-CC0D43B81086}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loan WebServices.Tests", "Loan WebServices.Tests\Loan WebServices.Tests.csproj", "{09AB3999-5B15-4AB4-AA55-73036D592D98}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9EC0E480-E48C-4691-B733-CC0D43B81086}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EC0E480-E48C-4691-B733-CC0D43B81086}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EC0E480-E48C-4691-B733-CC0D43B81086}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EC0E480-E48C-4691-B733-CC0D43B81086}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09AB3999-5B15-4AB4-AA55-73036D592D98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09AB3999-5B15-4AB4-AA55-73036D592D98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09AB3999-5B15-4AB4-AA55-73036D592D98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09AB3999-5B15-4AB4-AA55-73036D592D98}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1070E1D0-D1BC-4D13-B167-D66CBCEC2862}
+	EndGlobalSection
+EndGlobal
