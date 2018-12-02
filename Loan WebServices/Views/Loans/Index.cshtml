@@ -1,0 +1,153 @@
+﻿@model Loan_WebServices.Models.Loan
+
+@{
+    /**/
+
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .clickable{
+
+        cursor: pointer;
+    }
+</style>
+<h2>Loan Calculator</h2>
+
+
+
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>Loan</h4>
+    <hr />
+
+    <div class="row">
+        <label for="loanAmount">How much amount do you want on loan?</label>
+        <input type="text" name="Principal" id="Principal" />
+    </div>
+    <div class="row">
+        <label for="loanAmount">Interest rate:</label>
+        <input type="range" max="20" min="12" name="InterestRate" id="InterestRate" />
+    </div>
+    <div class="row">
+        <label for="loanTime">How much time in years do you need to pay the loan?</label>
+        <input type="number" name="Duration" id="Duration" />
+    </div>
+    <br />
+    <div class="row">
+        <input type="submit" class="btn btn-primary clickable" name="calculate" id="calculateId" value="Calculate" onclick="createDiv()" />
+        <input type="button" class="btn btn-secondary" name="compare" id="compareId" value="Compare" onclick="compareData()" disabled />
+    </div>
+    <br />
+    <div class="row">
+        <input type="button" class="btn btn-secondary" name="clear" id="clearId" value="Clear All" onclick="clearFunction()" />
+    </div>
+
+    <div id="resultId" style="display: none;">
+
+    </div>
+
+    <div id="savedData">
+
+    </div>
+    <div id="compareQuotes"></div>
+</div>
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script>
+
+
+
+    function createDiv() {
+
+        htmltext = "";
+        var link = '@Url.Action("loans", "api")';
+        $.ajax({
+            type: "POST",
+            url: link,
+            data: {
+                InterestRate: $("#InterestRate").val(),
+                Principal: $("#Principal").val(),
+                Duration: $("#Duration").val()
+            },
+            dataType: "json",
+            success: function (data) {
+                saveData = data;
+                displayData(data);
+
+            }
+        });
+
+    }
+
+    function displayData(data) {
+        var div = document.createElement('div');
+        div.innerHTML = document.getElementById('resultId').innerHTML;
+        document.body.appendChild(div);
+
+        htmltext += "<p>" + "Simple Interest " + " is  " + data.SimpleInterest;
+        htmltext += ".<p>";
+        htmltext += "<p>" + "Amount is " + " is  " + data.Amount;
+        htmltext += ".<p>";
+        div.insertAdjacentHTML('beforeend', htmltext);
+
+        // Create a <button> element
+        var btn = document.createElement("BUTTON");
+        btn.id = "someClassId";
+        var t = document.createTextNode("Save Quote");       
+        btn.appendChild(t);                              
+        document.body.appendChild(btn);
+        $("#compareId").removeAttr('disabled');
+
+    };
+
+    function compareData() {
+        var req = new XMLHttpRequest();
+        req.open('GET', 'http://localhost:62929/api/loans');
+        req.onload = function () {
+
+            var reqData = JSON.parse(req.responseText);
+
+            renderHtml(reqData);
+        };
+        req.send();
+    };
+    function renderHtml(data) {
+
+        var strResult = " < table class=\"table\">" +
+            "<th>Loan Principal </th>" +
+            "<th>Simple Interest </th>" +
+            "<th>Interest Rate</th>" +
+            "<th>Loan Duration </th>";
+
+        if (data == undefined) { data = []; }
+        else {
+            $.each(data, function (index, value) {
+                strResult +=
+                    "</td><td> " + value.Principal + "$ " +
+                    "</td><td>" + value.SimpleInterest + "$ " +
+                    "</td><td>" + value.InterestRate + "% " +
+                    "</td><td>" + value.Duration + "years "
+            });
+        }
+
+        strResult += "</table>";
+        $("#compareQuotes").html(strResult);
+    };
+    function clearFunction() {
+        var req = new XMLHttpRequest();
+        req.open('DELETE', 'http://localhost:62929/api/loans');
+        req.onload = function () {
+        };
+        req.send();
+    };
+</script>
